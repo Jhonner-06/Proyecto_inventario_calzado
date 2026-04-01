@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Información - Zapatería</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #27ae60;
+            --accent: #e67e22;
+            --bg: #fdfdfd;
+        }
+
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f0f2f5;
+            margin: 0;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h1 { text-align: center; color: var(--primary); margin-bottom: 30px; }
+
+        .tabs {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .tab-btn {
+            padding: 12px 20px;
+            cursor: pointer;
+            border: none;
+            background: #ecf0f1;
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: 8px;
+            transition: 0.3s;
+            color: #7f8c8d;
+        }
+
+        .tab-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+
+        .tab-btn:hover:not(.active) { background: #d5dbdb; }
+
+        .tab-content { display: none; animation: slideIn 0.4s ease-out; }
+        .tab-content.active { display: block; }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(-10px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .req-box {
+            background: #fcfcfc;
+            border: 1px solid #eee;
+            padding: 25px;
+            border-radius: 10px;
+            line-height: 1.6;
+        }
+
+        .image-placeholder {
+            margin-top: 20px;
+            border: 2px dashed #bdc3c7;
+            padding: 20px;
+            text-align: center;
+            border-radius: 10px;
+            background: #fafafa;
+            margin-bottom: 20px;
+        }
+
+        .image-placeholder img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 5px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+
+        pre {
+            background: #2d3436;
+            color: #dfe6e9;
+            padding: 20px;
+            border-radius: 8px;
+            font-size: 13px;
+            overflow-x: auto;
+            line-height: 1.5;
+        }
+
+        hr { border: 0; border-top: 1px solid #eee; margin: 20px 0; }
+
+        .btn-link {
+            text-decoration: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            color: white;
+            font-weight: bold;
+            display: inline-block;
+            margin: 5px 0;
+            transition: 0.3s;
+        }
+        .btn-excel { background-color: #1D6F42; }
+        .btn-word { background-color: #2B579A; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Base de Datos Zapatería</h1>
+
+    <div class="tabs">
+        <button class="tab-btn active" onclick="openTab(event, 'requerimiento')">Requerimiento</button>
+        <button class="tab-btn" onclick="openTab(event, 'formas')">Formas Normales</button>
+        <button class="tab-btn" onclick="openTab(event, 'diagrama')">Diagrama de Entidades</button>
+        <button class="tab-btn" onclick="openTab(event, 'base-datos')">Base de Datos</button>
+        <button class="tab-btn" onclick="openTab(event, 'insercion')">Inserción de Datos BD</button>
+        <button class="tab-btn" onclick="openTab(event, 'reverse')">Reverse Engineer</button>
+        <button class="tab-btn" onclick="openTab(event, 'newbd')">Nueva base de datos(Diagrama)</button>
+        <button class="tab-btn" onclick="openTab(event, 'simples')">Consultas Simples</button>
+        <button class="tab-btn" onclick="openTab(event, 'intermedias')">Consultas Intermedias</button>
+        <button class="tab-btn" onclick="openTab(event, 'avanzadas')">Consultas Avanzadas</button>
+        
+    </div>
+
+    <div id="requerimiento" class="tab-content active">
+        <div class="req-box">
+            <h2>caso de estudio</h2>
+            <p>Un almacén de venta de calzado, no fabrica sus productos, sino que tiene proveedores para ello, 
+                requiere crear un sistema de información que le permita sistematizar las ventas e inventario, 
+                ya que hasta el momento se maneja con ticketera.</p>
+            <hr>
+            <h3>1. Crear modelo entidad relación</h3>
+            <p>Un modelo de entidad relación es la estructura de las tablas que nos darán vida a la sabe de datos, 
+                nos ayuda a identificar tablas, datos, llaves primarias, llaves foráneas, las uniones entre tablas.</p><br>
+            <p>Para crear un modelo de entidad relación primero debemos trabajar con las formas 
+                normales, estas formas normales se usan en bases de datos relacionales para organizar la 
+                información correctamente y evitar problemas como datos repetidos, inconsistencias o 
+                anomalías al actualizar.</p><br>
+                <p>Su objetivo principal es normalizar una base de datos, es decir, estructurar las tablas de forma lógica y eficiente.</p>
+            <h3>Modelo conceptual</h3>
+            <div class="image-placeholder">
+                <img src="https://i.ibb.co/J9KRsx2/modelo-conceptual.png" alt="modelo conceptual">
+            </div>
+        </div>
+    </div>
+
+    <div id="formas" class="tab-content">
+        <div class="req-box">
+            <h2>Normalización de Datos</h2>
+            <p>se añade link del Excel y el word que se utilizaron para realizar esta pagina</p>
+
+            <a href="https://uniminuto0-my.sharepoint.com/:x:/g/personal/jhonner_moreno_uniminuto_edu_co/IQAWzvRKR9XxRYI97MGexWhUAQPnV7ad0wMXKlErlssPZ9w?e=r2cxdp" 
+                target="_blank" class="btn-link btn-excel" style="width: 300px;">
+                Formas Normales
+            </a><br>
+
+            <a href="https://uniminuto0-my.sharepoint.com/:w:/g/personal/jhonner_moreno_uniminuto_edu_co/IQDDbDUEd0dfQ4-o_qezc3vlAXTcfu8xO8tD-cj2D2Kwq2Q?e=LqHq89" 
+                target="_blank" class="btn-link btn-word" style="width: 300px;">
+                Documentacion word
+            </a>
+            <h3>1 forma normal</h3>
+            <p>Esta forma nos ayuda a que no tengamos valores repetitivos en cada tabla y que cada campo tenga su propio valor.</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/tMYDHyzB"><img src="https://i.ibb.co/VWMTLXxV/forma-normal1-1.png" alt="forma-normal1-1" border="0"></a>
+                <a href="https://ibb.co/y7Pwq00"><img src="https://i.ibb.co/43t6pWW/forma-normal1-2.png" alt="forma-normal1-2" border="0"></a>
+            </div>
+            
+            <h3>2 forma normal</h3>
+            <p>Para poder hacer la segunda forma normal, obligatoriamente necesitamos tener la primera forma normal terminada, esta forma nos ayuda a 
+                que cada dato esté ubicado de forma adecuada, ademas nos ayuda a eliminar redundancia de datos.</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/DHgmFMGL"><img src="https://i.ibb.co/Rk4tK6h7/forma-normal2.png" alt="forma-normal2" border="0"></a>
+            </div>
+            
+            <h3>3 forma normal</h3>
+            <p>Para realizar esta forma, necesitamos tener la forma 2, lo que hacemos es eliminar datos que dependan de otros, buscando que no haya información innecesaria.</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/TXq0Zfv"><img src="https://i.ibb.co/FvqY9rx/forma-normal-3.png" alt="forma-normal-3" border="0"></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="diagrama" class="tab-content">
+        <div class="req-box">
+            <h2>Diagrama de Entidades</h2>
+            <p>Ya teniendo estas 3  formas normales, procedemos a realizar un modelo de 
+                entidades en mysqlworkbench, que si no tiene este programa, dejare el link 
+                de descarga y un video para que puedan ejecutarlo y realizar este diagrama, 
+                este diagrama nos sirve para mirar las tablas que se necesitan en la base 
+                de datos, los datos necesarios, los campos y sus valores 
+                (varchar, bigint, date, etc..),como se contatenan las tablas, si son con 
+                línea continua y línea discontinua, si es de uno a muchos, de uno a uno o 
+                de muchos a muchos, también nos ayuda a saber cuales son las llaves primarias y 
+                foráneas las cuales nos ayudan como identificadores.</p><br>
+
+            <a href="https://www.youtube.com/watch?v=_K2nOYwOq1E&t=124s" 
+                target="_blank" class="btn-link btn-excel" style="width: 300px;">
+                Video instalacion
+            </a><br>
+
+            <a href="https://dev.mysql.com/downloads/workbench/" 
+                target="_blank" class="btn-link btn-word" style="width: 300px;">
+                Link De descarga
+            </a>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/H3rVFBP"><img src="https://i.ibb.co/TdHkvY0/diagrama-entidades.png" alt="diagrama-entidades" border="0"></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="base-datos" class="tab-content">
+        <div class="req-box">
+            <p>Para realizar la base de datos se necesita tener conocimiento sobre las 
+                formas normales y tener un motor de bases de datos que estaremos utilizando 
+                workbench, pero vamos a aprender a sacar la base de datos del diagrama de 
+                entidades el cual realizamos también en workbench, esta base de datos 
+                va a ser un script que nos mostrara como se crea la base de datos, las 
+                tablas, los campos que hay dentro de ellas, sus uniones y sobre todo las 
+                llaves primarias y foráneas.</p>
+            
+            <hr>
+            
+            <p><strong>Paso 1:</strong> tener el diagrama de entidades</p>
+            <p><strong>Paso 2:</strong> vamos a file y seleccionamos export y la primera opción que nos salga le damos click.</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/LhqvzYyY"><img src="https://i.ibb.co/JFbCRmTm/1.png" alt="1" border="0"></a>
+            </div>
+
+            <p><strong>Paso 3:</strong> seleccionamos el lugar donde se va a guardar el 
+                nombre del archivo, también seleccionamos solo la primara opción y le
+                damos next, se nos creara la carpeta donde lo guardamos.</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/jvsLyC8n"><img src="https://i.ibb.co/qMVRNHDT/2.png" alt="2" border="0"></a>
+            </div>
+
+            <p><strong>Paso 4:</strong> buscamos donde se guardo el archivo y lo abrimos, nos debería de mostrar algo asi:</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/MxzWMLPV"><img src="https://i.ibb.co/tT0k85Ys/3.png" alt="3" border="0"></a>
+                <a href="https://ibb.co/hR78DXyv"><img src="https://i.ibb.co/7JYy2gXF/3-1.png" alt="3-1" border="0"></a>
+                <a href="https://ibb.co/6R2wytct"><img src="https://i.ibb.co/kgpBGDVD/3-2.png" alt="3-2" border="0"></a>
+                <a href="https://ibb.co/wrwCnyq4"><img src="https://i.ibb.co/HpxYc7yq/3-3.png" alt="3-3" border="0"></a>
+                <a href="https://ibb.co/qLVG8TnX"><img src="https://i.ibb.co/Ps0pyqY3/3-4.png" alt="3-4" border="0"></a>
+            </div>
+
+            <p>En estas imágenes podemos ver como están formadas las tablas y como 
+                esta todo configurado con sus llaves primarias y foráneas. Ya tenemos 
+                la base de datos, ahora procederemos a añadir datos dentro de estas 
+                tablas.</p>
+
+        </div>
+    </div>
+
+    <div id="insercion" class="tab-content">
+        <div class="req-box">
+            
+            <p>se añade txt con los datos ingresados en las tablas</p><br>
+
+
+            <a href="https://uniminuto0-my.sharepoint.com/:t:/g/personal/jhonner_moreno_uniminuto_edu_co/IQCLE94dtRhHR4pPVzEDZ6PwAYR0CJMxw1Fliy6XPaDW2jQ?e=lXTFHI" 
+                target="_blank" class="btn-link btn-word" style="width: 300px;">
+                TXT
+            </a>
+            <p>Primero vemos que existan utilizando un select * from, vemos que existe pero no tiene datos:</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/YBc91nFk"><img src="https://i.ibb.co/QvPBTS3N/1-1.png" alt="1-1" border="0"></a>
+            </div>
+
+            <p>Vamos a ingresar datos en las tablas, vamos a poner como tope 20 datos por tabla: primero iremos por la tabla cliente.</p>
+            <p>Hay que tener en cuenta que para ingresar datos de el insert into en nombre de la tabla en comillas simples entre paréntesis 
+            los campos en los que vamos a ingresar datos y por ultimo los datos a ingresar, y se finaliza con punto y coma:</p>
+
+            <p>
+                INSERT INTO `Metodo_pago` (idMetodo_pago, efectivo, tarjeta, transferencia, llave) VALUES <br>
+                    (1, 'Si', 'No', 'No', 'Efect-01'), <br>
+                    (2, 'No', 'Visa', 'No', 'Visa-02');<br>
+            </p>
+
+            <p><strong>Ingresar datos en la tabla cliente:</strong></p>
+            <p>Al tener datos ingresados procedemos a seleccionar la tabla ver si quedaron todos los datos ingresados: (Select * from Cliente;).</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/VWXhPy0j"><img src="https://i.ibb.co/DD36SXPV/cliente.png" alt="cliente" border="0"></a>
+            </div>
+
+            <p><strong>Ingresar datos en la tabla vendedor:</strong></p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/kVCnJP38"><img src="https://i.ibb.co/vCn5hMsP/vendedor.png" alt="vendedor" border="0"></a>
+            </div>
+
+            <p><strong>Ingresar datos en la tabla Producto:</strong></p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/N2frwBQR"><img src="https://i.ibb.co/chRwznMq/producto.png" alt="producto" border="0"></a>
+            </div>
+
+            <p><strong>Ingresar datos en la tabla Metodo_pago:</strong></p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/F4KmdhWx"><img src="https://i.ibb.co/0ycmznXD/metodo-pago.png" alt="metodo-pago" border="0"></a>
+            </div>
+
+            <p><strong>Ingresar datos en la tabla proveedor:</strong></p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/3mmYY4tb"><img src="https://i.ibb.co/Sww775qg/proveedor.png" alt="proveedor" border="0"></a>
+            </div>
+
+            <p><strong>Ingresar datos en la tabla stock:</strong></p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/3mmYY4tb"><img src="https://i.ibb.co/Sww775qg/proveedor.png" alt="proveedor" border="0"></a>
+            </div>
+
+            <p><strong>Ingresar datos en la tabla Factura:</strong></p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/QFJCQrqH"><img src="https://i.ibb.co/hRgZ9Dnd/factura.png" alt="factura" border="0"></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="reverse" class="tab-content">
+        <div class="req-box">
+            <h2>Reverse Engineer</h2>
+            <p>Lito, ahora como ya tenemos todos los datos y la base de datos, realizamos un Reverse Engineer para el diagrama EER para ver si quedaron bien.</p>
+            
+            <p><strong>Paso 1:</strong> ir al apartado de database y seleccionar reverse engineer y le damos a todo siguente.</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/Kj8XNdwk"><img src="https://i.ibb.co/0jzcBTtS/reverse1.png" alt="reverse1" border="0"></a>
+                <a href="https://ibb.co/WvZF7ZDB"><img src="https://i.ibb.co/xqWGwWmz/reverse2.png" alt="reverse2" border="0"></a>
+            </div>
+
+            <p><strong>Paso 2:</strong> le damos ejecutar y siguiuente para ver si las conexiones nos quedaron bien</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/fdNK6WqC"><img src="https://i.ibb.co/s91Dx4bF/reverse3.png" alt="reverse3" border="0"></a>
+            </div>
+
+            <p>Aca podemos ver que si quedaron bien</p>
+            <div class="image-placeholder">
+                <a href="https://ibb.co/7JDG887q"><img src="https://i.ibb.co/JRTz00X9/reverse4.png" alt="reverse4" border="0"></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="newbd" class="tab-content active">
+        <div class="req-box">
+            <h2>Nueva base de datos con las uniones mejoradas</h2>
+
+            <div class="image-placeholder">
+                <a href="https://ibb.co/dwRK230Z"><img src="https://i.ibb.co/VcsBShW6/image.png" alt="image" border="0"></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="simples" class="tab-content">
+        <div class="req-box">
+            <h2>Consultas SQL Simples</h2>
+
+            <p>Se añade word con las consultas</p><br>
+
+
+            <a href="https://uniminuto0-my.sharepoint.com/:w:/g/personal/jhonner_moreno_uniminuto_edu_co/IQAeSSS5gWVORLdk_F0wuo7GAQnsgE6dDk7qyr6013n4bfU?e=OhjyaR" 
+                target="_blank" class="btn-link btn-word" style="width: 300px;">
+                WORD
+            </a>
+            <p>1. Ver todos los clientes: <br>
+                (select * from ): <br>
+                cliente
+            </p>
+
+            <div class="image-placeholder">
+                <a href="https://ibb.co/1f93Tnvb"><img src="https://i.ibb.co/TBHZtTvr/image.png" alt="image" border="0"></a>
+            </div>
+
+            <p>2. Listar productos disponibles: <br>
+                (select nombre_productos, drescripcion, precio, stock_idstock from productos;)
+
+            </p>            
+            
+            <div class="image-placeholder">
+                <a href="https://ibb.co/Df9X825s"><img src="https://i.ibb.co/HTtvx8n1/image.png" alt="image" border="0"></a>
+            </div>
+
+            <p>3. Buscar cliente por nombre: <br>
+                (select * from Cliente where nombres_Cliente like 'Juan Carlos';)
+
+            </p>  
+
+            <div class="image-placeholder">
+                <a href="https://ibb.co/wFy0jkRF"><img src="https://i.ibb.co/ksKHv7xs/image.png" alt="image" border="0"></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="intermedias" class="tab-content">
+        <div class="req-box">
+            <h2>Consultas SQL Intermedias</h2>
+            <p>1.	Mostrar todas las facturas con sus clientes: <br>
+                SELECT f.idfactura, c.nombres_cliente, f.Cliente_idCliente <br>
+                FROM factura f <br>
+                JOIN cliente c ON f.Cliente_idCliente = c.idCliente;
+            </p>
+
+            <div class="image-placeholder">
+                <a href="https://ibb.co/TqTbJ6cX"><img src="https://i.ibb.co/prPRNc2D/image.png" alt="image" border="0"></a>
+            </div>
+
+            <p>2.	Mostrar detalle de una factura: <br>
+                    SELECT <br>
+                        f.idfactura, <br>
+                        c.nombres_cliente, <br>
+                        v.nombres_vendedor, <br>
+                        m.efectivo, <br>
+                        m.tarjeta <br>
+                    FROM factura f <br>
+                    JOIN cliente c ON f.Cliente_idCliente = c.idCliente <br>
+                    JOIN vendedor v ON f.Vendedor_idvendedor = v.idvendedor <br>
+                    JOIN metodo_pago m ON f.Metodo_pago_idMetodo_pago = m.idMetodo_pago <br>
+                    WHERE f.idfactura = 2;
+            </p>
+
+            <div class="image-placeholder">
+                <a href="https://ibb.co/j0CsKqT"><img src="https://i.ibb.co/FZQCvcK/image.png" alt="image" border="0"></a>
+            </div>
+        </div>
+    </div>
+
+    <div id="avanzadas" class="tab-content">
+        <div class="req-box">
+            <h2>Consultas SQL Avanzadas</h2>
+            <p>1.	Calcular las ventas totales: <br>
+                SELECT SUM(CAST(precio AS DECIMAL)) AS ventas_totales <br>
+                FROM productos;
+            </p>
+
+            <div class="image-placeholder">
+                <a href="https://ibb.co/dwKVXnPJ"><img src="https://i.ibb.co/mVz2dQ9F/image.png" alt="image" border="0"></a>
+            </div>
+
+            <p>2.	Productos mas vendidos: <br>
+
+                SELECT p.nombre_productos, SUM(s.cantidad) AS cantidad_vendida <br>
+                FROM productos p <br>
+                JOIN stock s ON p.stock_idstock = s.idstock <br>
+                GROUP BY p.nombre_productos <br>
+                ORDER BY cantidad_vendida DESC <br>
+                LIMIT 1;
+
+            </p>
+
+            <div class="image-placeholder">
+                <a href="https://ibb.co/7tnGtY8B"><img src="https://i.ibb.co/SwtKwsWH/image.png" alt="image" border="0"></a>
+            </div>
+
+            <p>3.	Cliente con mayor gasto: <br>
+                    SELECT c.nombres_Cliente, SUM(CAST(p.precio AS DECIMAL)) AS gasto_total <br>
+                    FROM cliente c <br>
+                    JOIN factura f ON c.idCliente = f.Cliente_idCliente <br>
+                    JOIN productos p ON f.idfactura = p.factura_idfactura <br>
+                    GROUP BY c.nombres_Cliente <br> 
+                    ORDER BY gasto_total DESC; <br>
+
+            </p>
+
+            <div class="image-placeholder">
+                <a href="https://ibb.co/6Sjv32K"><img src="https://i.ibb.co/QVy82ZW/image.png" alt="image" border="0"></a>
+            </div>
+
+            <p>4.	Actualizar stock después de una venta: <br>
+                    UPDATE stock  <br>
+                    SET cantidad = cantidad - 20 <br>
+                    WHERE idstock = (SELECT stock_idstock FROM productos WHERE idProductos = 2); <br>
+
+            </p>
+
+            <div class="image-placeholder">
+                <a href="https://ibb.co/DgSmsvw2"><img src="https://i.ibb.co/M53KWtP0/image.png" alt="image" border="0"></a>
+                <a href="https://ibb.co/W4CL5Wws"><img src="https://i.ibb.co/67QkwRxN/image.png" alt="image" border="0"></a>
+                <a href="https://ibb.co/3X162H1"><img src="https://i.ibb.co/KZ64dH6/image.png" alt="image" border="0"></a>
+                <a href="https://ibb.co/bMKLsRts"><img src="https://i.ibb.co/ycQ56B26/image.png" alt="image" border="0"></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function openTab(evt, tabName) {
+        var i, tabContent, tabBtns;
+        tabContent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabContent.length; i++) {
+            tabContent[i].style.display = "none";
+        }
+        tabBtns = document.getElementsByClassName("tab-btn");
+        for (i = 0; i < tabBtns.length; i++) {
+            tabBtns[i].className = tabBtns[i].className.replace(" active", "");
+        }
+        document.getElementById(tabName).style.display = "block";
+        evt.currentTarget.className += " active";
+    }
+</script>
+
+</body>
+</html>
