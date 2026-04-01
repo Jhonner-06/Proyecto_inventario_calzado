@@ -1,0 +1,6 @@
+Comandos
+venv\Scripts\activate
+
+Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass
+
+python app.py

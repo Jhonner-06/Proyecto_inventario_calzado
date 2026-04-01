@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Cliente - Sistema Calzado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+    <style>
+        .search-box { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); max-width: 500px; margin: 20px auto; }
+        .result-card { background: #e3f2fd; border-left: 5px solid #1a73e8; padding: 15px; margin-top: 20px; border-radius: 4px; }
+        .error-card { background: #ffebee; border-left: 5px solid #f44336; padding: 15px; margin-top: 20px; border-radius: 4px; }
+        input[type="text"] { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        .btn-search { background: #1a73e8; color: white; border: none; padding: 10px 20px; border-radius: 4px; cursor: pointer; width: 100%; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="/" style="text-decoration: none; color: #666;">← Volver al Menú</a>
+        <h1>🔍 Buscador de Clientes</h1>
+    </div>
+
+    <div class="search-box">
+        <form method="POST">
+            <label>Número de Documento / ID:</label>
+            <input type="text" name="documento" placeholder="Ej: 102030" required>
+            <button type="submit" class="btn-search">Buscar en SQL Server</button>
+        </form>
+
+        {% if busqueda %}
+            {% if cliente %}
+                <div class="result-card">
+                    <h3>✅ Cliente Localizado</h3>
+                    <p><strong>Nombre:</strong> {{ cliente.nombres_Cliente }} {{ cliente.ape1_cliente }}</p>
+                    <p><strong>Dirección:</strong> {{ cliente.direccion_cliente if cliente.direccion_cliente else 'No registrada' }}</p>
+                </div>
+            {% else %}
+                <div class="error-card">
+                    <p>❌ <strong>No encontrado:</strong> No existe un cliente con ese documento.</p>
+                </div>
+            {% endif %}
+        {% endif %}
+    </div>
+</body>
+</html>

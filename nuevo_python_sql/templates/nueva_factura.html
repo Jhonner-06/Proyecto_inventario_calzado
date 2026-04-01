@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema de Ventas - Nueva Factura</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; background-color: #f8f9fa; margin: 20px; }
+        .container { max-width: 1100px; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); margin: auto; }
+        
+        
+        .section-card { background: #ffffff; border: 1px solid #e3e6f0; border-radius: 8px; padding: 20px; margin-bottom: 30px; }
+        .header-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-bottom: 20px; }
+        
+        label { font-weight: bold; display: block; margin-bottom: 8px; color: #4e73df; }
+        select, input { width: 100%; padding: 10px; border: 1px solid #d1d3e2; border-radius: 5px; box-sizing: border-box; }
+        
+       
+        .product-picker { display: flex; gap: 15px; align-items: flex-end; background: #f8f9fc; padding: 15px; border-radius: 8px; }
+        .btn-add { background: #4e73df; color: white; border: none; padding: 10px 20px; border-radius: 5px; cursor: pointer; white-space: nowrap; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { background: #4e73df; color: white; padding: 12px; text-align: left; }
+        td { padding: 12px; border-bottom: 1px solid #e3e6f0; }
+        
+        .total-box { text-align: right; margin-top: 20px; font-size: 1.6rem; font-weight: bold; color: #1cc88a; }
+        .btn-submit { background: #1cc88a; color: white; border: none; padding: 15px; width: 100%; border-radius: 8px; font-size: 1.2rem; cursor: pointer; margin-top: 20px; transition: 0.3s; }
+        .btn-submit:hover { background: #17a673; }
+
+        
+        .edit-select { border: 1px solid transparent; background: transparent; cursor: pointer; padding: 5px; }
+        .edit-select:hover { border: 1px solid #d1d3e2; background: #fff; }
+        .btn-action { border: none; background: none; cursor: pointer; font-size: 1.2rem; transition: transform 0.2s; }
+        .btn-action:hover { transform: scale(1.2); }
+        .status-badge { background: #f6c23e; color: black; padding: 3px 8px; border-radius: 10px; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <a href="/" style="text-decoration: none; color: #858796;">← Volver al Inicio</a>
+    
+    <div class="section-card">
+        <h2 style="color: #4e73df;">📝 Generar Factura</h2>
+        <hr>
+        
+        <form action="/guardar_factura" method="POST" id="formFactura">
+            <div class="header-grid">
+                <div>
+                    <label>Cliente:</label>
+                    <select name="cliente_id" required>
+                        <option value="">-- Seleccionar --</option>
+                        {% for c in clientes %}
+                        <option value="{{ c[0] }}">{{ c[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label>Vendedor:</label>
+                    <select name="vendedor_id" required>
+                        <option value="">-- Seleccionar --</option>
+                        {% for v in vendedores %}
+                        <option value="{{ v[0] }}">{{ v[1] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label>Forma de Pago:</label>
+                    <select name="metodo_id" required>
+                        <option value="">-- Seleccionar --</option>
+                        {% for m in metodos %}
+                        <option value="{{ m.id }}">{{ m.nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+
+            <div class="product-picker">
+                <div style="flex: 2;">
+                    <label>Producto / Calzado:</label>
+                    <select id="prod_select">
+                        <option value="">-- Buscar en inventario --</option>
+                        {% for p in productos %}
+                        <option value="{{ p.idproductos }}" 
+                                data-nombre="{{ p.nombre_productos }}" 
+                                data-precio="{{ p.precio }}" 
+                                data-stock="{{ p.cantidad }}">
+                            {{ p.nombre_productos }} - ${{ p.precio }} (Quedan: {{ p.cantidad }})
+                        </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div style="flex: 0.5;">
+                    <label>Cantidad:</label>
+                    <input type="number" id="prod_cant" min="1" value="1">
+                </div>
+                <button type="button" class="btn-add" onclick="agregarProducto()">+ Agregar Item</button>
+            </div>
+
+            <table id="tabla_detalle">
+                <thead>
+                    <tr>
+                        <th>Descripción</th>
+                        <th>Precio Unitario</th>
+                        <th>Cantidad</th>
+                        <th>Subtotal</th>
+                        <th>Quitar</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+
+            <div class="total-box">
+                Total a Cobrar: $<span id="display_total">0.00</span>
+                <input type="hidden" name="total_final" id="input_total" value="0">
+            </div>
+
+            <button type="submit" class="btn-submit">Finalizar Venta </button>
+        </form>
+    </div>
+
+    <div class="section-card" style="margin-top: 30px; border-top: 4px solid #4e73df;">
+    <h3>📜 Historial de facturas</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Factura #</th>
+                <th>Cliente</th>
+                <th>Vendedor</th>
+                <th>Detalle (Cant. | Precio)</th>
+                <th>Pago</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for f in facturas_viejas %}
+            <tr id="fila-{{ f[0] }}">
+                <form action="/actualizar_factura/{{ f[0] }}" method="POST">
+                    <td style="text-align: center;"><strong>{{ f[0] }}</strong></td>
+                    
+                    <td>
+                        <span class="ver-modo">{{ f[1] }}</span>
+                        <select name="cliente_id" class="edit-modo" style="display:none;">
+                            {% for c in clientes %}
+                            <option value="{{ c[0] }}" {% if c[1] == f[1] %}selected{% endif %}>{{ c[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td>
+                        <span class="ver-modo">{{ f[2] }}</span>
+                        <select name="vendedor_id" class="edit-modo" style="display:none;">
+                            {% for v in vendedores %}
+                            <option value="{{ v[0] }}" {% if v[1] == f[2] %}selected{% endif %}>{{ v[1] }}</option>
+                            {% endfor %}
+                        </select>
+                    </td>
+
+                    <td style="font-size: 0.85rem; color: #555;">
+                        {{ f[4] }}
+                    </td>
+                    
+                    <td style="text-align: center;">
+                        <span class="status-badge">{{ f[3] }}</span>
+                    </td>
+
+                    <td style="text-align: center; white-space: nowrap;">
+                        <button type="button" class="ver-modo" onclick="activarEdicion('{{ f[0] }}')" style="border:none; background:none; cursor:pointer; font-size:1.2rem;">✏️</button>
+                        <a href="/eliminar_factura/{{ f[0] }}" class="ver-modo" onclick="return confirm('¿Eliminar factura #{{ f[0] }}?')" style="text-decoration:none; margin-left:10px; font-size:1.2rem;">🗑️</a>
+                        
+                        <button type="submit" class="edit-modo" style="display:none; border:none; background:none; cursor:pointer; font-size:1.2rem;">💾</button>
+                        <button type="button" class="edit-modo" onclick="cancelarEdicion('{{ f[0] }}')" style="display:none; border:none; background:none; cursor:pointer; font-size:1.2rem; margin-left:10px;">❌</button>
+                        <a href="/descargar_factura/{{ f[0] }}" class="btn-action" style="text-decoration:none; margin-left:10px;" title="Descargar PDF">📄</a>
+                    </td>
+                </form>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+<script>
+function activarEdicion(id) {
+    const fila = document.getElementById('fila-' + id);
+    
+    fila.querySelectorAll('.ver-modo').forEach(el => el.style.display = 'none');
+    fila.querySelectorAll('.edit-modo').forEach(el => el.style.display = 'inline-block');
+}
+
+function cancelarEdicion(id) {
+    const fila = document.getElementById('fila-' + id);
+    
+    fila.querySelectorAll('.ver-modo').forEach(el => el.style.display = 'inline-block');
+    fila.querySelectorAll('.edit-modo').forEach(el => el.style.display = 'none');
+}
+</script>
+</div>
+
+<script>
+    let totalFactura = 0;
+
+    function agregarProducto() {
+        const select = document.getElementById("prod_select");
+        const cantInput = document.getElementById("prod_cant");
+        const cantidad = parseInt(cantInput.value);
+
+        if (!select.value || cantidad <= 0) {
+            alert("Selecciona un producto y cantidad válida.");
+            return;
+        }
+
+        const opcion = select.options[select.selectedIndex];
+        const stockActual = parseInt(opcion.dataset.stock);
+        const precio = parseFloat(opcion.dataset.precio);
+        const nombre = opcion.dataset.nombre;
+        const idProd = select.value;
+
+        if (cantidad > stockActual) {
+            alert("Error: Solo quedan " + stockActual + " unidades.");
+            return;
+        }
+
+        const subtotal = precio * cantidad;
+        totalFactura += subtotal;
+
+        const tbody = document.querySelector("#tabla_detalle tbody");
+        const fila = tbody.insertRow();
+
+        fila.innerHTML = `
+            <td>${nombre} <input type="hidden" name="prod_ids[]" value="${idProd}"></td>
+            <td>$${precio.toFixed(2)}</td>
+            <td>${cantidad} <input type="hidden" name="prod_cantidades[]" value="${cantidad}"></td>
+            <td>$${subtotal.toFixed(2)}</td>
+            <td><button type="button" onclick="eliminarFila(this, ${subtotal})" style="color:#e74a3b; cursor:pointer; border:none; background:none;">❌</button></td>
+        `;
+
+        actualizarMontoTotal();
+        cantInput.value = 1;
+        select.value = "";
+    }
+
+    function eliminarFila(btn, monto) {
+        totalFactura -= monto;
+        btn.closest('tr').remove();
+        actualizarMontoTotal();
+    }
+
+    function actualizarMontoTotal() {
+        document.getElementById("display_total").innerText = totalFactura.toFixed(2);
+        document.getElementById("input_total").value = totalFactura;
+    }
+</script>
+
+</body>
+</html>

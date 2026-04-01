@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Sistema Tienda de Calzado</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='estilos.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>Tienda de Calzado Uniminuto</h1>
+
+    <div class="menu">
+        <a href="/clientes" class="btn">👥 Clientes</a>
+        <a href="/productos" class="btn">👟 Productos</a>
+        <a href="/nueva_factura" class="btn">📄 Nueva Factura</a>
+        <a href="/pedido_proveedor" class="btn btn-proveedor">📦 Pedido Proveedor</a>
+        <a href="/estadisticas" class="btn btn-stats">📈 Estadísticas</a>
+    </div>
+
+    <div class="info">
+        <h3>📊 Resumen General</h3>
+        <p>Total Clientes: <strong>{{ resumen.clientes }}</strong></p>
+        <p>Total Productos: <strong>{{ resumen.productos }}</strong></p>
+        <p>Total Facturas: <strong>{{ resumen.facturas }}</strong></p>
+        
+    </div>
+</div>
+
+<style>
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f4f4f4; padding: 20px; }
+    .container { background: white; padding: 30px; border-radius: 10px; box-shadow: 0 0 15px rgba(0,0,0,0.1); max-width: 800px; margin: auto; }
+    h1 { color: #2c3e50; text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+    
+    .menu { margin: 25px 0; text-align: center; }
+    .menu a { 
+        display: inline-block; padding: 12px 25px; background: #3498db; 
+        color: white; text-decoration: none; border-radius: 5px; margin: 5px;
+        transition: background 0.3s ease;
+    }
+    .menu a:hover { background: #2980b9; }
+
+  
+    .menu .btn-proveedor { background: #27ae60; }
+    .menu .btn-proveedor:hover { background: #219150; }
+
+    
+    .menu .btn-stats { background: #8e44ad; }
+    .menu .btn-stats:hover { background: #7d3c98; }
+
+    .info { background: #ecf0f1; padding: 20px; border-radius: 8px; margin-top: 20px; border-left: 5px solid #3498db; }
+    .info h3 { margin-top: 0; color: #7f8c8d; }
+    .info p { font-size: 1.1em; border-bottom: 1px solid #dcdde1; padding: 8px 0; display: flex; justify-content: space-between; }
+    .info p:last-child { border-bottom: none; }
+</style>
+
+</body>
+</html>

@@ -1,0 +1,18 @@
+1.500 pixeles tope
+librerias para analisis de imagenes
+opencv(Open computer vision)
+pillow(Edicion de imagenes)
+
+billetes
+
+todo en jpg y png
+
+jpeg nunca utilizar en este caso.
+
+billetes viejos
+
+librerias:
+
+pip install tensorflow
+pip install pip install scikit-learn
+pip install opencv-python

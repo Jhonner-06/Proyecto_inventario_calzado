@@ -1,0 +1,68 @@
+<div class="card">
+    <a href="/">← Volver al Inicio</a>
+    <h2 style="text-align: center; color: #8e44ad;">Estadisticas</h2>
+
+        <div class="stat-box" style="background: #2c3e50; color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <h3>Mejor cliente</h3>
+            {% if cliente %}
+                <p style="font-size: 1.2em;"><strong>{{ cliente[0] }}</strong> es nuestro mejor comprador.</p>
+                <hr>
+                <p><strong>Total de compras:</strong> {{ cliente[1] }}</p>
+                <p><strong>Método de pago:</strong> {{ cliente[2] }}</p>
+                <p><strong>Lo que más compra:</strong> <span style="color: #faf9f6; font-weight: bold;">{{ cliente[3] }}</span></p>
+            {% else %}
+                <p>Aún no hay suficientes ventas para generar esta estadística.</p>
+            {% endif %}
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="sub-card" style="background: white; border: 1px solid #ddd; padding: 15px; border-radius: 8px;">
+                <h3>Proveedor con mas ingresos</h3>
+                    {% if mejor_proveedor %}
+                        <p>Nuestro mayor proveedor es: <strong>{{ mejor_proveedor[0] }}</strong></p>
+                        <p>Nos ha entregado un total de <strong>{{ mejor_proveedor[1] }}</strong> unidades.</p>
+                        <p>La inversión total con ellos es de: <span style="font-weight: bold; font-size: 1.2em;">${{ "{:,.2f}".format(mejor_proveedor[2]) }}</span></p>
+                        <p>Su producto más ingresado: <span>{{ mejor_proveedor[3] }}</span></p>
+                    {% else %}
+                        <p>Aún no hay registros de pedidos a proveedores.</p>
+                    {% endif %}
+        </div>
+
+        <div class="stat-box" style="background: #34495e; color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <h3>Vendedor del Mes</h3>
+            {% if vendedor_estrella %}
+                <p style="font-size: 1.2em;"> <strong>{{ vendedor_estrella[0] }}</strong>!</p>
+                <hr>
+                <p>📈 <strong>Total de productos vendidos:</strong> {{ vendedor_estrella[1] }} unidades.</p>
+                <p>👟 <strong>Producto que más vende:</strong> <span style="font-weight: bold;">{{ vendedor_estrella[2] }}</span></p>
+            {% else %}
+                <p>Aún no hay registros de ventas para evaluar a los vendedores.</p>
+            {% endif %}
+        </div>
+
+        <div class="stat-box" style="background: #f39c12; color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <h3>Producto Más Vendido</h3>
+            {% if producto_top %}
+                <p style="font-size: 1.4em;"><strong>{{ producto_top[0] }}</strong></p>
+                <hr>
+                <p><strong>Precio de venta:</strong> ${{ "{:,.2f}".format(producto_top[1]|float) }}</p>
+                <p><strong>Presencia en facturas:</strong> {{ producto_top[2] }} facturas distintas.</p>
+                <p><strong>Total unidades vendidas:</strong> <span style="font-weight: bold; font-size: 1.1em;">{{ producto_top[3] }} unidades</span></p>
+            {% else %}
+                <p>Aún no hay datos de ventas para identificar el producto líder.</p>
+            {% endif %}
+        </div>
+        <div class="stat-box" style="background: #8e44ad; color: white; padding: 20px; border-radius: 12px; margin-bottom: 20px;">
+            <h3>Mayor Volumen en Bodega</h3>
+            {% if stock_max %}
+                <p style="font-size: 1.3em;"><strong>{{ stock_max[0] }}</strong></p>
+                <hr>
+                <p><strong>Existencias actuales:</strong> {{ stock_max[1] }} unidades.</p>
+                <p><strong>Precio:</strong> ${{ "{:,.2f}".format(stock_max[2]|float) }}</p>
+                <p><strong>Proveedor de origen:</strong> {{ stock_max[3] }}</p>
+            {% else %}
+                <p>No hay datos de inventario disponibles.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
